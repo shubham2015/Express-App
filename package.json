@@ -1,0 +1,32 @@
+{
+  "name": "customer",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node app.js --presets es2015,stage-2"
+  },
+  "author": "Shubham",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham2015/Express-App.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shubham2015/Express-App/issues"
+  },
+  "homepage": "https://github.com/shubham2015/Express-App#readme",
+  "description": ""
+}
