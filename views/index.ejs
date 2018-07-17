@@ -20,5 +20,10 @@
       <input type = "submit" value = "Submit">
    </form>  
    <h1><%= title %> </h1>   
-  
+  <ul> 
+   <% users.forEach(function(user){ %>
+   	  <li><%= user.firstname %>
+      <%= user.lastname %> <a href="#" class="deleteUser" data-id="<%=user._id%>"> Delete </a></li>
+   <%})%>
+   </ul>
 <% include footer %>

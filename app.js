@@ -2,12 +2,15 @@ var express = require('express');      //Similar to import in ES 2015
 var bodyParser = require('body-parser');
 var path = require('path');
 var validator = require('express-validator');
-var app =express();   //Initialization
+var mongojs = require('mongojs');
+var db = mongojs('customer', ['users']); // db object is used to refer the database , customer is app name and users is the database name
+var ObjectId = mongojs.ObjectId;
+var app =express();   //Initialization and we use app object all the time
 /*var logger = (req, res , next) =>{            //Simple Middleware which will respond logging each time a new request comes up
 	console.log('logging.....');
 	next();
 }
-app.use(logger);*/
+app.use(logger);*/  
 
 
 app.set('view engine','ejs'); //ejs is the framework to write the pages in view folder
@@ -31,11 +34,13 @@ var person = {
 	age: 3
 }
 app.get('/',(req,res) => {
+	db.users.find(function (err, docs) {
 	res.render('index',{
 		title: 'Customers',
-		//users: users
+		users: docs
 
 	});
+	})
 
 });
 app.post('/users/add', (req,res) =>{
@@ -48,7 +53,7 @@ app.post('/users/add', (req,res) =>{
     {
       res.render('index',{
       	title: 'Customers',
-      	//users: users,
+      	users: docs,
       	errors: errors
       });
     }
@@ -59,9 +64,25 @@ app.post('/users/add', (req,res) =>{
 		lastname: req.body.last_name,     //req object and then putting into and object with the help of 
 		email: req.body.email             //body object and data stored in it
 	   } 
-	   console.log('Success');
+	   db.users.insert(newUser, function(error,result){
+	   	     if(error)
+	   	     {
+	   	     	console.log(error);
+	   	     }
+	   	     res.redirect('/');
+	   });
 	}  
 	
+});
+
+//Delete Middleware
+app.delete('/users/delete/:id',function(req,res){
+  db.users.remove({_id: ObjectId(req.params.id)}, function(err,result){
+    if(err)
+    	console.log(err);
+    res.redirect('/');
+  });
+
 });
 app.listen(3100, () => {
 
